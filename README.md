@@ -47,6 +47,55 @@ auth_service/
 ```bash
 git clone https://github.com/<your-username>/django-auth-service.git
 cd django-auth-service
+---
 
 
+```markdown
+## 2. Create and activate a virtual environment
+
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+
+### 3. Install dependencies
+
+pip install -r requirements.txt
+
+
+## 4.Set environment variables
+
+Create a .env file (or set them in Render dashboard) with:
+
+SECRET_KEY=<your-secret-key>
+DEBUG=False
+DATABASE_URL=<your-database-url>
+# Optional if using Redis
+REDIS_URL=<your-redis-url>
+
+
+## 5.Run migrations
+
+python manage.py migrate
+
+## 6. Collect static files
+python manage.py collectstatic --noinput
+
+## 📄 API Endpoints
+
+Swagger UI: /swagger/
+Example: https://auth-service-os1u.onrender.com/swagger/
+
+ReDoc UI: /redoc/
+Example: https://auth-service-os1u.onrender.com/redoc/
+
+Auth API: /api/auth/
+
+POST /api/auth/register/ → Register a new user
+
+POST /api/auth/login/ → Log in user and get JWT
+
+GET /api/auth/profile/ → Get authenticated user profile
+
+Full API documentation is available in Swagger/OpenAPI.
 
