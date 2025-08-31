@@ -33,9 +33,16 @@ ALLOWED_HOSTS = []
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# DATABASES = {
+#     'default': dj_database_url.config(default=config('DATABASE_URL'))
+# }
 DATABASES = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
+    "default": dj_database_url.config(
+        default="postgres://postgres:postgres@db:5432/postgres"
+    )
 }
+RATELIMIT_VIEW = 'rest_framework.exceptions.Throttled'
+
 
 CACHES = {
     "default": {
