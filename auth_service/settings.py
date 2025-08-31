@@ -30,27 +30,29 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
 
-# DATABASES = {
-#     'default': dj_database_url.config(default=config('DATABASE_URL'))
-# }
+SECRET_KEY = config("SECRET_KEY", default="fallback-secret")
+
+DEBUG = config("DEBUG", default=False, cast=bool)
+
+
 DATABASES = {
     "default": dj_database_url.config(
-        default="postgres://postgres:postgres@db:5432/postgres"
+        default=config("DATABASE_URL")  
     )
 }
-RATELIMIT_VIEW = 'rest_framework.exceptions.Throttled'
 
+# Rate limit behavior (403 vs 429)
+RATELIMIT_VIEW = "rest_framework.exceptions.Throttled"
 
+# Redis cache
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": config("REDIS_URL"),
+        "LOCATION": config("REDIS_URL", default="redis://127.0.0.1:6379/0"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        }
+        },
     }
 }
 
